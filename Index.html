@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeVault • The Vault | Exclusive South African Membership</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --gold: #f59e0b;
+            --amber: #fbbf24;
+            --bronze: #cd7f32;
+            --silver: #c0c0c0;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #09090b;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #18181b; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+        /* Animations */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.9); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes ticker {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+
+        /* Glass Effects */
+        .glass { 
+            background: rgba(255,255,255,0.03); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .glass-strong { 
+            background: rgba(24,24,27,0.98); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Gold Gradients */
+        .gold-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(to right, #f59e0b, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .bronze-gradient {
+            background: linear-gradient(135deg, #cd7f32 0%, #d4a574 50%, #cd7f32 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .silver-gradient {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #c0c0c0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Lock States */
+        .lock-locked {
+            color: #3f3f46;
+            filter: grayscale(100%);
+        }
+
+        .lock-unlocked {
+            color: #f59e0b;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.8));
+        }
+
+        /* Activity Ticker */
+        .activity-ticker {
+            overflow: hidden;
+            height: 40px;
+        }
+
+        .activity-ticker-content {
+            animation: ticker 15s linear infinite;
+        }
+
+        .activity-ticker:hover .activity-ticker-content {
+            animation-play-state: paused;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu { 
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 320px;
+            background: linear-gradient(to bottom, #18181b, #09090b);
+            border-left: 2px solid rgba(245, 158, 11, 0.3);
+            z-index: 60;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #mobile-menu.active { transform: translateX(0); }
+
+        #mobile-menu-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 55;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        #mobile-menu-backdrop.active { opacity: 1; visibility: visible; }
+
+        /* Key Card Hover */
+        .key-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .key-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.15);
+        }
+
+        .key-card.coming-soon {
+            opacity: 0.8;
+            filter: grayscale(0.3);
+        }
+
+        /* Leaderboard Row */
+        .leaderboard-row {
+            transition: all 0.2s ease;
+        }
+
+        .leaderboard-row:hover {
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        /* Toast */
+        #toast {
+            animation: slideInRight 0.4s ease forwards;
+            border-left: 4px solid var(--gold);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Neon Text */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5),
+                         0 0 20px rgba(245, 158, 11, 0.3),
+                         0 0 30px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Confetti */
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f59e0b;
+            animation: confetti 3s ease-out forwards;
+            z-index: 9999;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(12px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: linear-gradient(135deg, #18181b 0%, #09090b 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(245, 158, 11, 0.1);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .modal-content.large {
+            max-width: 800px;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Status Badge */
+        .status-open {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-closed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Vault Master Badge */
+        .vault-master-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Account Tab Styles */
+        .account-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            color: #71717a;
+        }
+
+        .account-tab.active {
+            color: #f59e0b;
+            border-bottom-color: #f59e0b;
+        }
+
+        .account-tab:hover {
+            color: #fbbf24;
+        }
+
+        /* Quarterly Product Cards */
+        .quarterly-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(24,24,27,0.5) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            transition: all 0.3s;
+        }
+
+        .quarterly-card:hover {
+            border-color: rgba(245, 158, 11, 0.5);
+            transform: translateY(-4px);
+        }
+
+        /* Vault Credits Display */
+        .credits-display {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        /* Ref Countdown Specific */
+        .countdown-box {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: monospace;
+        }
+
+        /* Fixed bottom ticker adjustment for mobile */
+        @media (max-width: 1024px) {
+            .fixed-bottom-ticker {
+                display: none;
+            }
+            footer {
+                padding-bottom: 20px !important;
+            }
+        }
+
+        /* Engraving Option */
+        .engraving-option {
+            border: 2px dashed rgba(245, 158, 11, 0.3);
+            transition: all 0.3s;
+        }
+
+        .engraving-option:hover, .engraving-option.selected {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Mystery Box */
+        .mystery-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mystery-box::before {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            opacity: 0.1;
+            font-weight: bold;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="text-white antialiased">
+
+    <!-- Live Vault Status Bar -->
+    <div class="glass-strong border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- Vault Status -->
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full status-open">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse-dot"></span>
+                        <span class="text-xs font-bold tracking-wider">VAULT STATUS: OPEN</span>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-2 text-xs text-zinc-400">
+                        <i class="fas fa-users text-amber-500"></i>
+                        <span>Current Occupants: <span class="text-amber-500 font-bold" id="occupant-count">847</span>/1750</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex-1 max-w-xs hidden md:block">
+                    <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                        <div class="progress-bar h-full rounded-full transition-all duration-1000" style="width: 48%"></div>
+                    </div>
+                </div>
+
+                <!-- Last Entry & Countdown -->
+                <div class="flex items-center gap-4 text-xs">
+                    <div class="hidden lg:block text-zinc-400">
+                        Last Entry: <span class="text-white">Sarah M. from Sandton</span> <span class="text-zinc-500">(2 mins ago)</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-amber-500/30">
+                        <i class="fas fa-clock text-amber-500"></i>
+                        <span class="font-mono text-amber-500" id="next-release-countdown">Next Drop: 14 Days</span>
+                    </div>
+                    <!-- Account Trigger -->
+                    <button onclick="openAccountModal()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 hover:bg-amber-500/20 border border-white/10 hover:border-amber-500/30 transition-all">
+                        <i class="fas fa-user text-amber-500"></i>
+                        <span id="account-btn-text" class="text-zinc-300">Sign In</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Glass Navbar -->
+    <nav class="glass sticky top-[60px] z-40 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-full blur opacity-50 group-hover:opacity-100 transition"></div>
+                    <div class="h-10 w-10 rounded-full bg-zinc-900 relative z-10 flex items-center justify-center">
+                        <i class="fas fa-key text-amber-500 text-lg"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tighter text-gold-gradient font-display">VibeVault</h1>
+                    <p class="text-xs text-zinc-500 -mt-1">Elite 1750 Membership</p>
+                </div>
+            </div>
+
+            <div class="hidden md:flex gap-8 text-sm font-medium items-center">
+                <a href="#keys" class="hover:text-amber-500 transition-colors relative group">
+                    The Keys
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#quarterly" class="hover:text-amber-500 transition-colors relative group">
+                    Quarterly Drops
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#accessories" class="hover:text-amber-500 transition-colors relative group">
+                    Accessories
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#vault" class="hover:text-amber-500 transition-colors relative group">
+                    The Vault
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#founders" class="hover:text-amber-500 transition-colors relative group">
+                    Founders Wall
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <!-- Vault Credits (visible when logged in) -->
+                <div id="credits-display" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full credits-display">
+                    <i class="fas fa-coins text-amber-500 text-xs"></i>
+                    <span class="text-xs"><span class="text-amber-500 font-bold" id="vault-credits">0</span> VC</span>
+                </div>
+
+                <!-- Cart -->
+                <div onclick="toggleCart()" class="relative cursor-pointer group p-2 hover:bg-white/5 rounded-full transition">
+                    <div class="absolute inset-0 bg-amber-500 rounded-full blur opacity-0 group-hover:opacity-30 transition"></div>
+                    <i class="fas fa-shopping-bag text-xl relative z-10 text-amber-500"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full animate-pulse-glow">0</span>
+                </div>
+
+                <!-- Mobile Account -->
+                <button onclick="openAccountModal()" class="sm:hidden text-xl hover:text-amber-500 transition-colors p-2">
+                    <i class="fas fa-user"></i>
+                </button>
+
+                <button onclick="toggleMobileMenu()" class="md:hidden text-2xl hover:text-amber-500 transition-colors p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Cart Dropdown -->
+        <div id="cart-dropdown" class="hidden absolute right-4 top-16 glass-strong rounded-2xl p-6 w-full max-w-md shadow-2xl z-50 border border-amber-500/20">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h4 class="font-display font-bold text-xl text-gold-gradient">Your Cart</h4>
+                <button onclick="toggleCart()" class="text-zinc-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div id="cart-items" class="max-h-64 overflow-y-auto space-y-3 mb-4"></div>
+
+            <div class="border-t border-white/10 pt-4">
+                <div class="flex justify-between text-lg font-bold mb-2">
+                    <span class="font-display">Subtotal</span>
+                    <span id="cart-total" class="text-gold-gradient text-xl">R0</span>
+                </div>
+                <div class="flex justify-between text-sm text-zinc-400 mb-4">
+                    <span>Vault Credits Available</span>
+                    <span id="cart-credits-avail">0 VC</span>
+                </div>
+                <button onclick="openCheckout()" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3.5 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-amber-500/25 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                    <span>Proceed to Checkout</span>
+                    <i class="fas fa-lock text-sm"></i>
+                </button>
+                <p class="text-center text-xs text-zinc-500 mt-2">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Secure SSL Checkout
+                </p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Backdrop -->
+    <div id="mobile-menu-backdrop" onclick="toggleMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="flex flex-col">
+        <div class="flex justify-between items-center p-6 border-b border-white/10">
+            <span class="text-xl font-bold text-gold-gradient font-display">Menu</span>
+            <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition text-2xl"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="flex-1 py-6 flex flex-col gap-1">
+            <div class="px-6 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition" onclick="navigateTo('keys')">
+                <i class="fas fa-key text-amber-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">The Keys</div>
+                    <div class="text-xs text-zinc-500">Collect All Three Tiers</div>
+                </div>
+            </div>
+            <div class="px-6 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition" onclick="navigateTo('quarterly')">
+                <i class="fas fa-box-open text-amber-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">Quarterly Drops</div>
+                    <div class="text-xs text-zinc-500">Limited Seasonal Releases</div>
+                </div>
+            </div>
+            <div class="px-6 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition" onclick="navigateTo('accessories')">
+                <i class="fas fa-link text-amber-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">Accessories</div>
+                    <div class="text-xs text-zinc-500">Chains, Cases & Extras</div>
+                </div>
+            </div>
+            <div class="px-6 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition" onclick="navigateTo('vault')">
+                <i class="fas fa-vault text-amber-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">The Vault</div>
+                    <div class="text-xs text-zinc-500">Unlock the Mystery</div>
+                </div>
+            </div>
+            <div class="px-6 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition" onclick="navigateTo('founders')">
+                <i class="fas fa-crown text-amber-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">Founders Wall</div>
+                    <div class="text-xs text-zinc-500">The Elite 1750</div>
+                </div>
+            </div>
+            <div class="px-6 py-3 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition" onclick="openAccountModal()">
+                <i class="fas fa-user-circle text-amber-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">My Account</div>
+                    <div class="text-xs text-zinc-500">Keys, Orders & Settings</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-white/10 bg-gradient-to-t from-amber-500/10 to-transparent">
+            <div class="bg-amber-500/20 rounded-lg p-3 mb-4 text-center">
+                <p class="text-xs text-amber-400 font-semibold mb-1">VAULT STATUS</p>
+                <p class="text-sm font-bold">847/1750 Keys Claimed</p>
+                <p class="text-xs text-zinc-400 mt-1">Next drop in 14 days</p>
+            </div>
+            <button onclick="navigateTo('keys')" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-4 rounded-xl font-bold text-center hover:shadow-lg hover:shadow-amber-500/25 transition">
+                Claim Your Key
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-[90vh] flex items-center justify-center relative overflow-hidden bg-[radial-gradient(at_center,#18181b_0%,#09090b_100%)]">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#f59e0b_0%,transparent_50%)] opacity-10"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,#cd7f32_0%,transparent_40%)] opacity-10"></div>
+
+        <div class="absolute top-20 left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-48 h-48 bg-yellow-600/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10 pt-12">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left reveal active">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-amber-500/30 mb-6">
+                        <i class="fas fa-crown text-amber-500"></i>
+                        <span class="text-sm text-zinc-300">South Africa's Most Exclusive Membership</span>
+                    </div>
+
+                    <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 font-display leading-tight">
+                        <span class="block text-white">Only 1750 Will</span>
+                        <span class="text-gold-gradient neon-text">Ever Enter.</span>
+                    </h2>
+
+                    <p class="text-lg md:text-xl text-zinc-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Three tiers. Quarterly drops. A lifetime membership. Collect physical vault keys forged from solid stainless steel and unlock exclusive access forever.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+                        <a href="#keys" class="group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25 inline-flex items-center gap-2">
+                            <span class="relative z-10">Pre-Order Now</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform relative z-10"></i>
+                        </a>
+                        <a href="#quarterly" class="px-8 py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 transition-all flex items-center gap-2">
+                            <i class="fas fa-play text-amber-500 text-sm"></i>
+                            See Quarterly System
+                        </a>
+                    </div>
+
+                    <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-6 text-zinc-500 text-sm">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-hammer text-amber-500"></i>
+                            <span>Locally Fabricated SA</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-fingerprint text-amber-500"></i>
+                            <span>Laser Engraved IDs</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-infinity text-amber-500"></i>
+                            <span>Never Restocked</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative reveal active" style="animation-delay: 0.2s;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 rounded-3xl blur-3xl"></div>
+                    <img src="images/all-three-keys.jpg" alt="The Three Vault Keys" class="relative rounded-3xl border border-white/10 shadow-2xl">
+                    <div class="absolute -bottom-4 -right-4 glass rounded-2xl p-4 border border-amber-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full vault-master-badge flex items-center justify-center">
+                                <i class="fas fa-crown text-black text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-zinc-400">Vault Masters</div>
+                                <div class="text-xl font-bold text-gold-gradient">127 Qualified</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Keys Section - UPDATED QUANTITIES -->
+    <section id="keys" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">The Foundation Collection</span>
+                <h3 class="text-4xl md:text-5xl font-bold font-display mb-4">Choose Your <span class="text-gold-gradient">Tier</span></h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto">Each key is precision-machined from 85g solid stainless steel, individually numbered, and permanently archived. Once sold out, never restocked.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Bronze Key - 1000 Available -->
+                <div class="key-card glass rounded-3xl overflow-hidden border border-amber-500/10 reveal">
+                    <div class="relative h-64 overflow-hidden bg-gradient-to-b from-black/50 to-transparent">
+                        <img src="images/bronze-key-hero.jpg" alt="The Access Key - Bronze" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-amber-500/30">
+                            <span class="text-xs font-bold text-amber-500">LIMITED: 1000</span>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs font-bold border border-green-500/30">
+                                <i class="fas fa-check-circle mr-1"></i>AVAILABLE NOW
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-2xl font-bold bronze-gradient mb-1">The Access Key</h4>
+                                <p class="text-sm text-zinc-500">Bronze Edition • Q1 2026</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-white">R599</div>
+                                <div class="text-xs text-zinc-500">or R150 deposit</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>+100 Vibe Score Points</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>Founders Wall Listing</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>Quarterly Drop Access</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>Lifetime Membership</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-xs text-zinc-500">
+                                <span class="text-amber-500 font-bold" id="bronze-remaining">623</span> of 1000 remaining
+                            </div>
+                            <div class="w-20 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all duration-1000" style="width: 38%"></div>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('bronze')" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-black py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Pre-Order Now</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Silver Key - 500 Available -->
+                <div class="key-card glass rounded-3xl overflow-hidden border border-white/20 reveal" style="animation-delay: 0.1s;">
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-zinc-400 via-white to-zinc-400"></div>
+                    <div class="relative h-64 overflow-hidden bg-gradient-to-b from-black/50 to-transparent">
+                        <img src="images/silver-key-hero.jpg" alt="The Insight Key - Silver" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-white/30">
+                            <span class="text-xs font-bold text-zinc-300">LIMITED: 500</span>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs font-bold border border-green-500/30">
+                                <i class="fas fa-check-circle mr-1"></i>PRE-ORDER OPEN
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-2xl font-bold silver-gradient mb-1">The Insight Key</h4>
+                                <p class="text-sm text-zinc-500">Silver Edition • Q2 2026</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-white">R999</div>
+                                <div class="text-xs text-zinc-500">or R200 deposit</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-zinc-400"></i>
+                                <span>+250 Vibe Score Points</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-zinc-400"></i>
+                                <span>All Bronze Benefits</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-zinc-400"></i>
+                                <span>Priority Quarterly Access</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-zinc-400"></i>
+                                <span>Exclusive Silver Events</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-xs text-zinc-500">
+                                <span class="text-zinc-300 font-bold" id="silver-remaining">341</span> of 500 remaining
+                            </div>
+                            <div class="w-20 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-zinc-600 to-zinc-300 rounded-full transition-all duration-1000" style="width: 32%"></div>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('silver')" class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Pre-Order Silver</span>
+                        </button>
+                        <p class="text-center text-xs text-zinc-500 mt-2">Ships Q2 2026</p>
+                    </div>
+                </div>
+
+                <!-- Gold Key - 250 Available -->
+                <div class="key-card glass rounded-3xl overflow-hidden border border-amber-500/30 reveal" style="animation-delay: 0.2s;">
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 animate-pulse-glow"></div>
+                    <div class="relative h-64 overflow-hidden bg-gradient-to-b from-black/50 to-transparent">
+                        <img src="images/gold-key-hero.jpg" alt="The Legacy Key - Gold" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-amber-500/30">
+                            <span class="text-xs font-bold text-amber-500">ULTRA: 250</span>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-500 text-xs font-bold border border-amber-500/30">
+                                <i class="fas fa-crown mr-1"></i>LEGACY TIER
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-2xl font-bold text-gold-gradient mb-1">The Legacy Key</h4>
+                                <p class="text-sm text-zinc-500">Gold Edition • Q3 2026</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-white">R1,899</div>
+                                <div class="text-xs text-zinc-500">or R400 deposit</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>+500 Vibe Score Points</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>All Silver Benefits</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>VIP Vault Master Events</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-zinc-400">
+                                <i class="fas fa-check text-amber-500"></i>
+                                <span>Lifetime Free Shipping</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-xs text-zinc-500">
+                                <span class="text-amber-500 font-bold" id="gold-remaining">187</span> of 250 remaining
+                            </div>
+                            <div class="w-20 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-amber-600 to-yellow-400 rounded-full transition-all duration-1000" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('gold')" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-crown"></i>
+                            <span>Pre-Order Gold</span>
+                        </button>
+                        <p class="text-center text-xs text-zinc-500 mt-2">Only 250 exist. Ships Q3 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quarterly Drops Section - NEW -->
+    <section id="quarterly" class="py-24 relative overflow-hidden bg-zinc-900/30 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">Sustained Exclusivity</span>
+                <h3 class="text-4xl md:text-5xl font-bold font-display mb-4">Quarterly <span class="text-gold-gradient">Drops</span></h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto">Your key is a lifetime membership. Every quarter, exclusive accessories, mystery keys, and limited collaborations drop only to key holders. No public sales.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <!-- Mystery Key -->
+                <div class="quarterly-card rounded-2xl p-6 reveal">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                            <i class="fas fa-question text-purple-400 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-bold text-purple-400 border border-purple-400/30 px-2 py-1 rounded">NEXT DROP</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Mystery Key Q2</h4>
+                    <p class="text-sm text-zinc-400 mb-4">Limited to 100 pieces. Design revealed only to purchasers. Drops April 1st.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white">R299</span>
+                        <span class="text-xs text-zinc-500">Key Holders Only</span>
+                    </div>
+                </div>
+
+                <!-- Collaboration -->
+                <div class="quarterly-card rounded-2xl p-6 reveal" style="animation-delay: 0.1s;">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+                            <i class="fas fa-handshake text-blue-400 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-bold text-blue-400 border border-blue-400/30 px-2 py-1 rounded">UPCOMING</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Artist Series Vol.1</h4>
+                    <p class="text-sm text-zinc-400 mb-4">Collaboration with SA street artists. 50 pieces per design. Q3 2026.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white">R449</span>
+                        <span class="text-xs text-zinc-500">Gold/Silver Priority</span>
+                    </div>
+                </div>
+
+                <!-- Accessories Drop -->
+                <div class="quarterly-card rounded-2xl p-6 reveal" style="animation-delay: 0.2s;">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-gem text-green-400 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-bold text-green-400 border border-green-400/30 px-2 py-1 rounded">RECURRING</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Vault Crystals</h4>
+                    <p class="text-sm text-zinc-400 mb-4">Custom display crystals for your keys. New colors each quarter.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white">R199</span>
+                        <span class="text-xs text-zinc-500">All Tiers</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="glass rounded-2xl p-8 text-center reveal">
+                <h4 class="text-2xl font-bold mb-4">Next Quarterly Drop In</h4>
+                <div class="flex justify-center gap-4 md:gap-8">
+                    <div class="text-center">
+                        <div class="countdown-box text-2xl md:text-4xl font-bold text-amber-500" id="countdown-days">14</div>
+                        <div class="text-xs text-zinc-500 mt-1">Days</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="countdown-box text-2xl md:text-4xl font-bold text-amber-500" id="countdown-hours">08</div>
+                        <div class="text-xs text-zinc-500 mt-1">Hours</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="countdown-box text-2xl md:text-4xl font-bold text-amber-500" id="countdown-minutes">45</div>
+                        <div class="text-xs text-zinc-500 mt-1">Minutes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="countdown-box text-2xl md:text-4xl font-bold text-amber-500" id="countdown-seconds">33</div>
+                        <div class="text-xs text-zinc-500 mt-1">Seconds</div>
+                    </div>
+                </div>
+                <p class="text-zinc-500 mt-4 text-sm">Key holders get 24hr early access. Vault Masters get 48hr access.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accessories & Upsells Section - NEW -->
+    <section id="accessories" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">Enhance Your Collection</span>
+                <h3 class="text-4xl md:text-5xl font-bold font-display mb-4">Vault <span class="text-gold-gradient">Accessories</span></h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto">Complete your setup with premium accessories. Available immediately with your key purchase or standalone for existing members.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Display Stand -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition reveal">
+                    <div class="h-48 bg-zinc-800/50 flex items-center justify-center">
+                        <i class="fas fa-layer-group text-6xl text-zinc-600"></i>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold mb-1">Magnetic Display Stand</h4>
+                        <p class="text-xs text-zinc-500 mb-3">Floating acrylic stand with LED base</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">R349</span>
+                            <button onclick="addToCart('stand')" class="px-3 py-1.5 bg-amber-500/20 text-amber-500 rounded-lg text-sm font-semibold hover:bg-amber-500/30 transition">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chain -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition reveal" style="animation-delay: 0.1s;">
+                    <div class="h-48 bg-zinc-800/50 flex items-center justify-center">
+                        <i class="fas fa-link text-6xl text-zinc-600"></i>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold mb-1">Titanium Chain</h4>
+                        <p class="text-xs text-zinc-500 mb-3">24-inch military-grade titanium</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">R199</span>
+                            <button onclick="addToCart('chain')" class="px-3 py-1.5 bg-amber-500/20 text-amber-500 rounded-lg text-sm font-semibold hover:bg-amber-500/30 transition">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leather Pouch -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition reveal" style="animation-delay: 0.2s;">
+                    <div class="h-48 bg-zinc-800/50 flex items-center justify-center">
+                        <i class="fas fa-wallet text-6xl text-zinc-600"></i>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold mb-1">Leather Key Pouch</h4>
+                        <p class="text-xs text-zinc-500 mb-3">Full-grain leather, hand-stitched</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">R279</span>
+                            <button onclick="addToCart('pouch')" class="px-3 py-1.5 bg-amber-500/20 text-amber-500 rounded-lg text-sm font-semibold hover:bg-amber-500/30 transition">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Engraving -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition reveal" style="animation-delay: 0.3s;">
+                    <div class="h-48 bg-zinc-800/50 flex items-center justify-center">
+                        <i class="fas fa-signature text-6xl text-zinc-600"></i>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold mb-1">Custom Engraving</h4>
+                        <p class="text-xs text-zinc-500 mb-3">10 characters max, back of key</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">R99</span>
+                            <button onclick="addToCart('engraving')" class="px-3 py-1.5 bg-amber-500/20 text-amber-500 rounded-lg text-sm font-semibold hover:bg-amber-500/30 transition">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Vault / Combination Lock Section -->
+    <section id="vault" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#f59e0b_0%,transparent_40%)] opacity-5"></div>
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">The Ultimate Achievement</span>
+                <h3 class="text-4xl md:text-5xl font-bold font-display mb-4">Unlock <span class="text-gold-gradient">The Vault</span></h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto">Collect all three foundation keys to achieve Vault Master status. The Grand Vault opens January 2027 for a private event unlike any other.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Vault Door Image -->
+                <div class="relative reveal">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 rounded-3xl blur-3xl"></div>
+                    <img src="images/vault-door.jpg" alt="The Vault Door" class="relative rounded-3xl border border-white/10 shadow-2xl">
+                </div>
+
+                <!-- Combination Lock Visual -->
+                <div class="glass rounded-3xl p-8 border border-amber-500/20 reveal" style="animation-delay: 0.2s;">
+                    <h4 class="text-2xl font-bold mb-6 text-center">Your Combination</h4>
+
+                    <div class="flex justify-center gap-8 mb-8">
+                        <!-- Lock 1: Bronze -->
+                        <div class="text-center">
+                            <div id="lock-bronze" class="w-20 h-20 rounded-full glass border-2 border-zinc-700 flex items-center justify-center mb-3 transition-all duration-500">
+                                <i class="fas fa-lock text-3xl text-zinc-600"></i>
+                            </div>
+                            <div class="text-sm font-semibold bronze-gradient">Bronze</div>
+                            <div class="text-xs text-zinc-500">Access Key</div>
+                            <div class="text-xs text-amber-500 mt-1" id="user-bronze-status">Not Owned</div>
+                        </div>
+
+                        <!-- Lock 2: Silver -->
+                        <div class="text-center">
+                            <div id="lock-silver" class="w-20 h-20 rounded-full glass border-2 border-zinc-700 flex items-center justify-center mb-3 transition-all duration-500">
+                                <i class="fas fa-lock text-3xl text-zinc-600"></i>
+                            </div>
+                            <div class="text-sm font-semibold silver-gradient">Silver</div>
+                            <div class="text-xs text-zinc-500">Insight Key</div>
+                            <div class="text-xs text-zinc-400 mt-1" id="user-silver-status">Not Owned</div>
+                        </div>
+
+                        <!-- Lock 3: Gold -->
+                        <div class="text-center">
+                            <div id="lock-gold" class="w-20 h-20 rounded-full glass border-2 border-zinc-700 flex items-center justify-center mb-3 transition-all duration-500">
+                                <i class="fas fa-lock text-3xl text-zinc-600"></i>
+                            </div>
+                            <div class="text-sm font-semibold text-gold-gradient">Gold</div>
+                            <div class="text-xs text-zinc-500">Legacy Key</div>
+                            <div class="text-xs text-amber-500 mt-1" id="user-gold-status">Not Owned</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <div id="vault-status-text" class="text-lg text-zinc-400">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Own all 3 keys to become a Vault Master
+                        </div>
+                    </div>
+
+                    <!-- Prize Pool Tracker -->
+                    <div class="glass rounded-2xl p-6 border border-amber-500/10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+                                    <i class="fas fa-trophy text-amber-500"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold">Grand Event Prize Pool</div>
+                                    <div class="text-xs text-zinc-500">R50 per key sold contributes</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-gold-gradient" id="prize-pool">R42,350</div>
+                                <div class="text-xs text-zinc-500">and growing</div>
+                            </div>
+                        </div>
+                        <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                            <div class="progress-bar h-full rounded-full transition-all duration-1000" id="prize-progress" style="width: 24%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-zinc-500 mt-2">
+                            <span>847 keys sold</span>
+                            <span>Target: R175,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founders Wall Section -->
+    <section id="founders" class="py-24 bg-zinc-900/30 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">The Elite 1750</span>
+                <h3 class="text-4xl md:text-5xl font-bold font-display mb-4">The <span class="text-gold-gradient">Founders Wall</span></h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto">The pioneers. The believers. The ones who secured their place before the Vault sealed.</p>
+            </div>
+
+            <!-- Latest Vault Masters -->
+            <div class="glass rounded-2xl p-6 mb-8 border border-amber-500/20 reveal">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-full vault-master-badge flex items-center justify-center">
+                        <i class="fas fa-crown text-black"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg">Latest Vault Masters</h4>
+                        <p class="text-xs text-zinc-500">Members who own all three foundation keys</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-xs font-bold text-black">TM</div>
+                        <span class="text-sm">Thabo M.</span>
+                        <i class="fas fa-check-circle text-amber-500 text-xs"></i>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-xs font-bold text-black">LJ</div>
+                        <span class="text-sm">Lisa J.</span>
+                        <i class="fas fa-check-circle text-amber-500 text-xs"></i>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-xs font-bold text-black">RK</div>
+                        <span class="text-sm">Ravi K.</span>
+                        <i class="fas fa-check-circle text-amber-500 text-xs"></i>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-xs font-bold text-black">SN</div>
+                        <span class="text-sm">Sarah N.</span>
+                        <i class="fas fa-check-circle text-amber-500 text-xs"></i>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-xs font-bold text-black">JD</div>
+                        <span class="text-sm">John D.</span>
+                        <i class="fas fa-check-circle text-amber-500 text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="glass rounded-2xl overflow-hidden border border-white/10 reveal" style="animation-delay: 0.1s;">
+                <div class="p-4 border-b border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h4 class="font-bold">Founders Leaderboard</h4>
+                    <div class="flex gap-2">
+                        <button onclick="filterLeaderboard('all')" class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-500 text-xs font-semibold">All</button>
+                        <button onclick="filterLeaderboard('bronze')" class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 text-xs hover:bg-amber-900/30 hover:text-amber-500 transition">Bronze</button>
+                        <button onclick="filterLeaderboard('silver')" class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 text-xs hover:bg-zinc-700 hover:text-white transition">Silver</button>
+                        <button onclick="filterLeaderboard('gold')" class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 text-xs hover:bg-amber-900/30 hover:text-amber-500 transition">Gold</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-zinc-900/50 text-xs text-zinc-500 uppercase">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Rank</th>
+                                <th class="px-4 py-3 text-left">Founder</th>
+                                <th class="px-4 py-3 text-center">Keys</th>
+                                <th class="px-4 py-3 text-center">Vibe Score</th>
+                                <th class="px-4 py-3 text-center">Status</th>
+                                <th class="px-4 py-3 text-right">Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body" class="text-sm">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Anonymous Option Note -->
+            <div class="mt-4 text-center text-xs text-zinc-500">
+                <i class="fas fa-shield-alt mr-1"></i>
+                Prefer privacy? Toggle anonymous mode in your <a href="#" onclick="openAccountModal()" class="text-amber-500 hover:underline">account settings</a>.
+            </div>
+        </div>
+    </section>
+
+    <!-- Referral Program Section - NEW -->
+    <section class="py-24 relative">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="glass rounded-3xl p-8 md:p-12 border border-amber-500/20 reveal">
+                <div class="text-center mb-8">
+                    <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">Grow The Community</span>
+                    <h3 class="text-3xl md:text-4xl font-bold font-display mb-4">Refer & <span class="text-gold-gradient">Earn</span></h3>
+                    <p class="text-zinc-400">Invite friends to join the Vault. Earn Vault Credits for every successful referral.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="text-center p-4 rounded-xl bg-zinc-900/50">
+                        <div class="text-3xl font-bold text-amber-500 mb-1">R50</div>
+                        <div class="text-xs text-zinc-400">Per Bronze Referral</div>
+                    </div>
+                    <div class="text-center p-4 rounded-xl bg-zinc-900/50">
+                        <div class="text-3xl font-bold text-amber-500 mb-1">R100</div>
+                        <div class="text-xs text-zinc-400">Per Silver Referral</div>
+                    </div>
+                    <div class="text-center p-4 rounded-xl bg-zinc-900/50">
+                        <div class="text-3xl font-bold text-amber-500 mb-1">R200</div>
+                        <div class="text-xs text-zinc-400">Per Gold Referral</div>
+                    </div>
+                </div>
+
+                <div id="referral-logged-out" class="text-center">
+                    <button onclick="openAccountModal()" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition">
+                        Sign In to Get Your Code
+                    </button>
+                </div>
+
+                <div id="referral-logged-in" class="hidden">
+                    <div class="flex gap-4 mb-4">
+                        <input type="text" id="referral-code" readonly class="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-center font-mono text-amber-500" value="VV-837492">
+                        <button onclick="copyReferral()" class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg font-semibold transition">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <p class="text-center text-xs text-zinc-500">Share your code. When someone uses it at checkout, you earn Vault Credits instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,#f59e0b_0%,transparent_40%)] opacity-5"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+            <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">Our Story</span>
+            <h3 class="text-4xl md:text-6xl font-bold font-display mb-8">The Vault Opens<br><span class="text-gold-gradient">When It Opens.</span></h3>
+            <div class="prose prose-invert mx-auto max-w-2xl text-left">
+                <p class="text-lg text-zinc-300 leading-relaxed mb-6">
+                    VibeVault started with a question: What if we created something truly scarce? Not artificial scarcity. Real scarcity. Only 1750 keys will ever exist in the foundation series.
+                </p>
+                <p class="text-zinc-400 leading-relaxed mb-6">
+                    Each key is locally fabricated in Johannesburg from solid 304 stainless steel. Individually laser-engraved with unique IDs. Permanently archived in our registry. Once all 1750 are claimed, the foundation series closes forever.
+                </p>
+                <p class="text-zinc-400 leading-relaxed mb-6">
+                    But this isn't just a one-time purchase. Your key is a lifetime membership. Quarterly drops, exclusive events, and a community of 1750 like-minded individuals. The Vault isn't just a product—it's a system designed for longevity.
+                </p>
+                <p class="text-zinc-400 leading-relaxed">
+                    Collect all three foundation keys and you become a Vault Master. On January 2027, the Grand Vault opens. Inside? An exclusive black-tie event, the accumulated prize pool, and the company of the other Vault Masters who saw the vision.
+                </p>
+            </div>
+            <div class="flex justify-center gap-8 mt-12">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-500 font-display">1750</div>
+                    <div class="text-sm text-zinc-400">Total Keys</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-500 font-display">847</div>
+                    <div class="text-sm text-zinc-400">Keys Claimed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-500 font-display">127</div>
+                    <div class="text-sm text-zinc-400">Vault Masters</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-500 font-display">4</div>
+                    <div class="text-sm text-zinc-400">Quarters/Year</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials - UPDATED TO MATCH AVAILABLE TIERS -->
+    <section class="py-24 bg-zinc-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-amber-500 font-semibold text-sm tracking-wider uppercase mb-2 block">Vault Founder Quotes</span>
+                <h3 class="text-4xl md:text-5xl font-bold font-display">Words From <span class="text-gold-gradient">The Inside</span></h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass rounded-2xl p-6 hover:border-amber-500/30 border border-transparent transition reveal">
+                    <div class="flex gap-1 text-amber-400 mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-zinc-300 mb-6 leading-relaxed">"I pre-ordered all three tiers immediately. The quarterly drop system means this is an investment that keeps giving. Already excited for April's Mystery Key."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center font-bold text-sm">TM</div>
+                        <div>
+                            <div class="font-semibold text-sm">Thabo M.</div>
+                            <div class="text-xs text-zinc-500">Johannesburg • Vault Master</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover:border-amber-500/30 border border-transparent transition reveal">
+                    <div class="flex gap-1 text-amber-400 mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-zinc-300 mb-6 leading-relaxed">"The weight of the Bronze key in my hand is unreal. Knowing only 1000 exist worldwide and I have #042? That's true exclusivity. Worth every rand."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center font-bold text-sm">LK</div>
+                        <div>
+                            <div class="font-semibold text-sm">Lisa K.</div>
+                            <div class="text-xs text-zinc-500">Cape Town • Bronze Tier</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover:border-amber-500/30 border border-transparent transition reveal">
+                    <div class="flex gap-1 text-amber-400 mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-zinc-300 mb-6 leading-relaxed">"Pre-ordered the Silver tier for Q2. The referral system is genius - I've already earned R200 in Vault Credits sharing with my circle."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center font-bold text-sm">RK</div>
+                        <div>
+                            <div class="font-semibold text-sm">Ravi K.</div>
+                            <div class="text-xs text-zinc-500">Durban • Silver Pre-order</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-amber-600/10 to-orange-600/10"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+            <h3 class="text-4xl md:text-5xl font-bold font-display mb-4">Ready To Enter <span class="text-gold-gradient">The Vault?</span></h3>
+            <p class="text-zinc-400 mb-8 max-w-xl mx-auto">1750 keys total. 847 already claimed. Will you secure your place before the Vault seals?</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#keys" class="group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25 inline-flex items-center justify-center gap-2">
+                    <span class="relative z-10">Choose Your Tier</span>
+                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform relative z-10"></i>
+                </a>
+                <button onclick="openAccountModal()" class="px-8 py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-user text-amber-500 text-sm"></i>
+                    Create Account
+                </button>
+            </div>
+            <p class="text-xs text-zinc-500 mt-6">
+                <i class="fas fa-shield-alt mr-1"></i>
+                Secure checkout • Flexible deposits • Cancel anytime
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer - REPOSITIONED LEGAL LINKS -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-24 lg:pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="h-10 w-10 rounded-full bg-zinc-900 flex items-center justify-center border border-amber-500/30">
+                            <i class="fas fa-key text-amber-500"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold font-display text-gold-gradient">VibeVault</h2>
+                            <p class="text-xs text-zinc-500">Only 1750 Will Enter</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-500 mb-4 max-w-sm">South Africa's most exclusive membership. Three tiers. Quarterly drops. One Grand Vault opening January 2027.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-amber-500 hover:text-black transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-amber-500 hover:text-black transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-amber-500 hover:text-black transition"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">The Vault</h4>
+                    <ul class="space-y-2 text-zinc-500 text-sm">
+                        <li><a href="#keys" class="hover:text-amber-500 transition">The Keys</a></li>
+                        <li><a href="#quarterly" class="hover:text-amber-500 transition">Quarterly Drops</a></li>
+                        <li><a href="#accessories" class="hover:text-amber-500 transition">Accessories</a></li>
+                        <li><a href="#vault" class="hover:text-amber-500 transition">The Vault</a></li>
+                        <li><a href="#founders" class="hover:text-amber-500 transition">Founders Wall</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Support & Legal</h4>
+                    <ul class="space-y-2 text-zinc-500 text-sm">
+                        <li><a href="#" onclick="openFAQModal()" class="hover:text-amber-500 transition">FAQ</a></li>
+                        <li><a href="#" onclick="openShippingModal()" class="hover:text-amber-500 transition">Shipping Info</a></li>
+                        <li><a href="#" onclick="openContactModal()" class="hover:text-amber-500 transition">Contact Us</a></li>
+                        <li><a href="#" onclick="openPrivacyModal()" class="hover:text-amber-500 transition">Privacy Policy</a></li>
+                        <li><a href="#" onclick="openTermsModal()" class="hover:text-amber-500 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-600">
+                <p>&copy; 2026 VibeVault. All rights reserved.</p>
+                <div class="flex items-center gap-2 text-xs">
+                    <i class="fas fa-lock text-amber-500"></i>
+                    <span>Secure SSL Encryption</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FIXED: Bottom ticker only on desktop, moved up on mobile -->
+    <div class="fixed-bottom-ticker fixed bottom-0 left-0 right-0 glass-strong border-t border-amber-500/20 z-40 py-2 px-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4 text-xs">
+                <span class="text-zinc-500 font-semibold">LIVE:</span>
+                <div id="bottom-ticker" class="flex gap-6">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-zinc-500">
+                <i class="fas fa-users text-amber-500"></i>
+                <span><span class="text-amber-500 font-bold">847</span>/1750 keys claimed</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACCOUNT MODAL - NEW -->
+    <div id="account-modal" class="modal-overlay">
+        <div class="modal-content large">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold font-display text-gold-gradient">My Vault Account</h3>
+                <button onclick="closeAccountModal()" class="text-zinc-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- Login/Register View -->
+            <div id="auth-view" class="">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Login -->
+                    <div class="p-6 rounded-xl bg-zinc-900/50 border border-zinc-800">
+                        <h4 class="font-bold mb-4 text-lg">Sign In</h4>
+                        <form onsubmit="handleLogin(event)" class="space-y-4">
+                            <input type="email" id="loginEmail" placeholder="Email" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" required>
+                            <input type="password" id="loginPassword" placeholder="Password" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" required>
+                            <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold hover:shadow-lg transition">
+                                Sign In
+                            </button>
+                        </form>
+                        <p class="text-center text-xs text-zinc-500 mt-4">
+                            <a href="#" class="text-amber-500 hover:underline">Forgot password?</a>
+                        </p>
+                    </div>
+
+                    <!-- Register -->
+                    <div class="p-6 rounded-xl bg-zinc-900/50 border border-zinc-800">
+                        <h4 class="font-bold mb-4 text-lg">Create Account</h4>
+                        <form onsubmit="handleRegister(event)" class="space-y-4">
+                            <input type="text" id="registerName" placeholder="Full Name" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" required>
+                            <input type="email" id="registerEmail" placeholder="Email" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" required>
+                            <input type="password" id="registerPassword" placeholder="Create Password" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" required>
+                            <input type="tel" id="registerPhone" placeholder="Phone (+27...)" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" required>
+                            <div class="flex items-start gap-2">
+                                <input type="checkbox" id="terms" class="mt-1" required>
+                                <label for="terms" class="text-xs text-zinc-400">I agree to the Terms of Service and Privacy Policy</label>
+                            </div>
+                            <button type="submit" class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-xl font-bold transition">
+                                Create Account
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard View (Hidden initially) -->
+            <div id="dashboard-view" class="hidden">
+                <!-- Tabs -->
+                <div class="flex border-b border-zinc-800 mb-6">
+                    <div class="account-tab active" onclick="switchTab('profile')">Profile</div>
+                    <div class="account-tab" onclick="switchTab('keys')">My Keys</div>
+                    <div class="account-tab" onclick="switchTab('orders')">Orders</div>
+                    <div class="account-tab" onclick="switchTab('referrals')">Referrals</div>
+                    <div class="account-tab" onclick="switchTab('settings')">Settings</div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="tab-profile" class="space-y-4">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-2xl font-bold text-black" id="user-initials">JD</div>
+                        <div>
+                            <h4 class="font-bold text-xl" id="user-name">John Doe</h4>
+                            <p class="text-sm text-zinc-500" id="user-email">john@example.com</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-zinc-900/50 rounded-lg">
+                            <div class="text-xs text-zinc-500 mb-1">Vibe Score</div>
+                            <div class="text-2xl font-bold text-amber-500" id="user-score">0</div>
+                        </div>
+                        <div class="p-4 bg-zinc-900/50 rounded-lg">
+                            <div class="text-xs text-zinc-500 mb-1">Vault Credits</div>
+                            <div class="text-2xl font-bold text-amber-500" id="user-credits">R0</div>
+                        </div>
+                    </div>
+                    <button onclick="logout()" class="mt-4 text-red-400 hover:text-red-300 text-sm font-semibold">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                    </button>
+                </div>
+
+                <!-- My Keys Tab -->
+                <div id="tab-keys" class="hidden space-y-4">
+                    <div id="owned-keys-list" class="space-y-3">
+                        <p class="text-zinc-500 text-center py-8">No keys owned yet. <a href="#keys" onclick="closeAccountModal()" class="text-amber-500 hover:underline">Browse collection</a></p>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="tab-orders" class="hidden space-y-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="text-zinc-500 text-xs uppercase">
+                                <tr>
+                                    <th class="text-left py-2">Order</th>
+                                    <th class="text-left py-2">Items</th>
+                                    <th class="text-center py-2">Status</th>
+                                    <th class="text-right py-2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-list" class="text-zinc-300">
+                                <tr><td colspan="4" class="py-8 text-center text-zinc-500">No orders yet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Referrals Tab -->
+                <div id="tab-referrals" class="hidden space-y-4">
+                    <div class="p-4 bg-zinc-900/50 rounded-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-zinc-400">Your Referral Code</span>
+                            <span class="text-xs text-green-400">Active</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="dash-referral-code" readonly class="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 font-mono text-amber-500 text-center" value="VV-837492">
+                            <button onclick="copyReferral()" class="px-4 py-2 bg-amber-500/20 text-amber-500 rounded-lg hover:bg-amber-500/30 transition">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="p-3 bg-zinc-900/30 rounded-lg">
+                            <div class="text-xl font-bold text-white" id="ref-count">0</div>
+                            <div class="text-xs text-zinc-500">Total Referrals</div>
+                        </div>
+                        <div class="p-3 bg-zinc-900/30 rounded-lg">
+                            <div class="text-xl font-bold text-white" id="ref-earned">R0</div>
+                            <div class="text-xs text-zinc-500">Credits Earned</div>
+                        </div>
+                        <div class="p-3 bg-zinc-900/30 rounded-lg">
+                            <div class="text-xl font-bold text-white" id="ref-pending">R0</div>
+                            <div class="text-xs text-zinc-500">Pending</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="tab-settings" class="hidden space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
+                        <div>
+                            <div class="font-semibold">Founders Wall Visibility</div>
+                            <div class="text-xs text-zinc-500">Show my name on the leaderboard</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="privacy-toggle" class="sr-only peer" checked onchange="togglePrivacy()">
+                            <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
+                        <div>
+                            <div class="font-semibold">Email Notifications</div>
+                            <div class="text-xs text-zinc-500">Quarterly drop reminders</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                        </label>
+                    </div>
+                    <button onclick="changePassword()" class="w-full p-3 border border-zinc-700 rounded-lg text-sm font-semibold hover:bg-zinc-800 transition text-left">
+                        <i class="fas fa-lock mr-2"></i>Change Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold font-display text-gold-gradient">Secure Checkout</h3>
+                <button onclick="closeCheckout()" class="text-zinc-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div id="checkout-items" class="space-y-3 mb-6 max-h-48 overflow-y-auto"></div>
+
+            <!-- Engraving Option -->
+            <div id="engraving-section" class="mb-6 p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-signature text-amber-500"></i>
+                    <span class="font-semibold text-sm">Add Custom Engraving?</span>
+                    <span class="text-xs text-amber-500">+R99</span>
+                </div>
+                <input type="text" id="engraving-text" maxlength="10" placeholder="10 chars max (e.g., JANE2026)" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-sm focus:border-amber-500 focus:outline-none" oninput="toggleEngraving(this.value)">
+            </div>
+
+            <div class="bg-zinc-900/50 p-4 rounded-xl mb-6">
+                <div class="flex justify-between items-center mb-2 text-sm">
+                    <span class="text-zinc-400">Subtotal</span>
+                    <span id="checkout-subtotal" class="font-semibold">R0</span>
+                </div>
+                <div class="flex justify-between items-center mb-2 text-sm" id="engraving-line" style="display:none;">
+                    <span class="text-zinc-400">Engraving</span>
+                    <span class="font-semibold">R99</span>
+                </div>
+                <div class="flex justify-between items-center mb-2 text-sm">
+                    <span class="text-zinc-400">Shipping (SA)</span>
+                    <span class="font-semibold">R0</span>
+                </div>
+                <div class="border-t border-zinc-800 pt-2 flex justify-between items-center text-lg font-bold">
+                    <span>Total</span>
+                    <span id="checkout-total" class="text-gold-gradient">R0</span>
+                </div>
+                <div class="text-xs text-zinc-500 mt-1 text-right">or 3x interest-free payments</div>
+            </div>
+
+            <form onsubmit="processCheckout(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" class="col-span-2 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" placeholder="Full Name" required>
+                    <input type="email" class="col-span-2 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" placeholder="Email" required>
+                    <input type="tel" class="col-span-2 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" placeholder="Phone (+27 XX XXX XXXX)" required>
+                    <input type="text" class="col-span-2 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" placeholder="Street Address" required>
+                    <input type="text" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" placeholder="City" required>
+                    <input type="text" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 focus:border-amber-500 focus:outline-none transition" placeholder="Postal Code" required>
+                </div>
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" id="create-account-checkout" class="mt-1">
+                    <label for="create-account-checkout" class="text-sm text-zinc-400">Create account for order tracking and referral code</label>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-lock"></i>
+                    <span>Complete Secure Payment</span>
+                </button>
+                <div class="flex justify-center gap-2 text-2xl text-zinc-600">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fas fa-lock text-xs flex items-center text-zinc-500">SSL</i>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Legal Modals -->
+    <div id="privacy-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold font-display text-gold-gradient">Privacy Policy</h3>
+                <button onclick="closeLegalModal('privacy-modal')" class="text-zinc-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="text-sm text-zinc-400 space-y-4 prose prose-invert">
+                <p><strong>Last Updated:</strong> March 2026</p>
+                <p>VibeVault respects your privacy. We collect only essential data: name, contact details, shipping addresses, and order history.</p>
+                <p><strong>Key Registry:</strong> Your key ownership is recorded in our permanent blockchain-backed registry. This data is public only if you opt-in to the Founders Wall.</p>
+                <p><strong>Marketing:</strong> We email quarterly drop announcements only. No spam. Unsubscribe anytime in account settings.</p>
+                <p><strong>Data Security:</strong> All payments processed via PayFast (PCI-DSS compliant). We never store card details.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold font-display text-gold-gradient">Terms of Service</h3>
+                <button onclick="closeLegalModal('terms-modal')" class="text-zinc-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="text-sm text-zinc-400 space-y-4 prose prose-invert">
+                <p><strong>Pre-Orders:</strong> Deposits (R150-R400) secure your key and serial number. Balance due 2 weeks before shipping. Deposits refundable until fabrication begins.</p>
+                <p><strong>Key Ownership:</strong> Keys are collectible items granting membership access. Not financial instruments. Resale allowed but warranty voids.</p>
+                <p><strong>Quarterly Drops:</strong> Available exclusively to key holders. Limited quantities. First-come-first-served with tier-based early access.</p>
+                <p><strong>Grand Vault Event:</strong> January 2027. Attendance requires Vault Master status (all 3 foundation keys). Prize pool distributed as described.</p>
+                <p><strong>Shipping:</strong> South Africa only. R0 shipping for Gold tier. R99 flat rate for others. Local pickup available in JHB/CT.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 glass-strong text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 max-w-sm z-[100]" style="bottom: 80px;">
+        <span class="text-2xl">🔑</span>
+        <div>
+            <p id="toast-text" class="font-medium text-sm"></p>
+        </div>
+    </div>
+
+    <script>
+         const API_URL = 'https://vibevault-api.onrender.com/api';
+        // ==========================================
+        // STATE MANAGEMENT - ENHANCED
+        // ==========================================
+        let cart = JSON.parse(localStorage.getItem('vibevault_cart') || '[]');
+        let userKeys = JSON.parse(localStorage.getItem('vibevault_keys') || '[]');
+        let vibeScore = parseInt(localStorage.getItem('vibevault_score') || '0');
+        let vaultCredits = parseInt(localStorage.getItem('vibevault_credits') || '0');
+        let isLoggedIn = localStorage.getItem('vibevault_user') !== null;
+        let userData = JSON.parse(localStorage.getItem('vibevault_user') || '{}');
+        let hasEngraving = false;
+
+        // UPDATED Key data with new quantities
+        const keys = {
+            bronze: { id: 'bronze', name: 'The Access Key (Bronze)', tier: 'Bronze', price: 599, deposit: 150, points: 100, image: 'images/bronze-key-hero.jpg', remaining: 623, total: 1000 },
+            silver: { id: 'silver', name: 'The Insight Key (Silver)', tier: 'Silver', price: 999, deposit: 200, points: 250, image: 'images/silver-key-hero.jpg', remaining: 341, total: 500 },
+            gold: { id: 'gold', name: 'The Legacy Key (Gold)', tier: 'Gold', price: 1899, deposit: 400, points: 500, image: 'images/gold-key-hero.jpg', remaining: 187, total: 250 },
+            stand: { id: 'stand', name: 'Magnetic Display Stand', tier: 'Accessory', price: 349, deposit: 349, points: 0, image: '', remaining: 50, total: 50 },
+            chain: { id: 'chain', name: 'Titanium Chain', tier: 'Accessory', price: 199, deposit: 199, points: 0, image: '', remaining: 100, total: 100 },
+            pouch: { id: 'pouch', name: 'Leather Key Pouch', tier: 'Accessory', price: 279, deposit: 279, points: 0, image: '', remaining: 75, total: 75 },
+            engraving: { id: 'engraving', name: 'Custom Engraving', tier: 'Service', price: 99, deposit: 99, points: 0, image: '', remaining: 999, total: 999 }
+        };
+
+        // Mock leaderboard data - UPDATED
+        const leaderboardData = [
+            { rank: 1, name: 'Thabo M.', initials: 'TM', keys: ['bronze', 'silver', 'gold'], score: 850, status: 'Vault Master', joined: '2 days ago' },
+            { rank: 2, name: 'Lisa J.', initials: 'LJ', keys: ['bronze', 'silver', 'gold'], score: 850, status: 'Vault Master', joined: '3 days ago' },
+            { rank: 3, name: 'Ravi K.', initials: 'RK', keys: ['bronze', 'silver', 'gold'], score: 850, status: 'Vault Master', joined: '5 days ago' },
+            { rank: 4, name: 'Sarah N.', initials: 'SN', keys: ['bronze', 'silver', 'gold'], score: 850, status: 'Vault Master', joined: '1 week ago' },
+            { rank: 5, name: 'Mike D.', initials: 'MD', keys: ['bronze', 'silver'], score: 350, status: 'Key Holder', joined: '1 week ago' },
+            { rank: 6, name: 'Jessica P.', initials: 'JP', keys: ['bronze', 'silver'], score: 350, status: 'Key Holder', joined: '1 week ago' },
+            { rank: 7, name: 'David L.', initials: 'DL', keys: ['bronze'], score: 100, status: 'Founder', joined: '2 weeks ago' },
+            { rank: 8, name: 'Emma W.', initials: 'EW', keys: ['bronze'], score: 100, status: 'Founder', joined: '2 weeks ago' },
+        ];
+
+        // Activity data - UPDATED
+        const activities = [
+            { text: 'Thabo from Pretoria claimed Bronze #377', time: '2 mins ago' },
+            { text: 'Sarah M. pre-ordered Silver tier', time: '5 mins ago' },
+            { text: 'Only 187 Gold Keys remaining', time: '12 mins ago' },
+            { text: 'Ravi K. became a Vault Master', time: '18 mins ago' },
+            { text: 'Lisa from Cape Town joined Founders', time: '25 mins ago' },
+            { text: 'Quarterly Drop Q2 announced for April 1', time: '32 mins ago' },
+            { text: 'Mike D. purchased Display Stand', time: '45 mins ago' },
+            { text: 'Vault Prize Pool hit R42,350', time: '1 hour ago' },
+        ];
+
+        // ==========================================
+        // CART FUNCTIONS - ENHANCED
+        // ==========================================
+        function addToCart(keyId) {
+            const key = keys[keyId];
+            const existing = cart.find(item => item.id === keyId);
+
+            if (existing) {
+                showToast('This item is already in your cart');
+                return;
+            }
+
+            cart.push({ ...key, qty: 1 });
+            saveCart();
+            updateCartUI();
+            showToast(`${key.name} added to cart`);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('vibevault_cart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const count = cart.length;
+            document.getElementById('cart-count').textContent = count;
+            document.getElementById('cart-credits-avail').textContent = `${vaultCredits} VC`;
+            renderCart();
+            updateLocks();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const total = cart.reduce((sum, item) => sum + item.deposit, 0);
+
+            document.getElementById('cart-total').textContent = `R${total}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-zinc-500">
+                        <i class="fas fa-key text-4xl mb-2 text-zinc-700"></i>
+                        <p>Your cart is empty</p>
+                        <button onclick="navigateTo('keys'); toggleCart();" class="text-amber-500 text-sm mt-2 hover:underline">Browse Keys</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center p-3 rounded-lg bg-zinc-800/30">
+                    <div class="flex items-center gap-3">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover">` : `<div class="w-12 h-12 rounded-lg bg-zinc-700 flex items-center justify-center"><i class="fas fa-box text-zinc-500"></i></div>`}
+                        <div>
+                            <div class="font-medium text-sm">${item.name}</div>
+                            <div class="text-xs text-zinc-500">${item.tier === 'Service' ? 'Service' : 'Deposit'}: R${item.deposit}</div>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-zinc-500 hover:text-red-400 transition">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-dropdown').classList.toggle('hidden');
+        }
+
+        // ==========================================
+        // CHECKOUT - ENHANCED
+        // ==========================================
+        function openCheckout() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            document.getElementById('cart-dropdown').classList.add('hidden');
+
+            const container = document.getElementById('checkout-items');
+            const subtotal = cart.reduce((sum, item) => sum + item.deposit, 0);
+
+            document.getElementById('checkout-subtotal').textContent = `R${subtotal}`;
+            updateCheckoutTotal();
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex justify-between items-center p-3 bg-zinc-800/30 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-10 h-10 rounded-lg object-cover">` : `<div class="w-10 h-10 rounded-lg bg-zinc-700 flex items-center justify-center"><i class="fas fa-box text-zinc-500 text-xs"></i></div>`}
+                        <div>
+                            <div class="text-sm font-medium">${item.name}</div>
+                            <div class="text-xs text-zinc-500">${item.tier}</div>
+                        </div>
+                    </div>
+                    <span class="font-bold">R${item.deposit}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('checkout-modal').classList.add('active');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.remove('active');
+            hasEngraving = false;
+            document.getElementById('engraving-text').value = '';
+            document.getElementById('engraving-line').style.display = 'none';
+        }
+
+        function toggleEngraving(value) {
+            hasEngraving = value.length > 0;
+            document.getElementById('engraving-line').style.display = hasEngraving ? 'flex' : 'none';
+            updateCheckoutTotal();
+        }
+
+        function updateCheckoutTotal() {
+            const subtotal = cart.reduce((sum, item) => sum + item.deposit, 0);
+            const engravingCost = hasEngraving ? 99 : 0;
+            const total = subtotal + engravingCost;
+            document.getElementById('checkout-total').textContent = `R${total}`;
+        }
+
+        function processCheckout(e) {
+            e.preventDefault();
+
+            // Add keys to user collection
+            cart.forEach(item => {
+                if (item.id === 'engraving') return; // Skip engraving as separate service
+                if (!userKeys.includes(item.id)) {
+                    userKeys.push(item.id);
+                    vibeScore += item.points;
+                    // Add to orders
+                    addOrder(item);
+                }
+            });
+
+            // Handle account creation if checked
+            const createAccount = document.getElementById('create-account-checkout').checked;
+            if (createAccount && !isLoggedIn) {
+                const name = e.target.querySelector('input[placeholder="Full Name"]').value;
+                const email = e.target.querySelector('input[type="email"]').value;
+                createUserAccount(name, email);
+            }
+
+            localStorage.setItem('vibevault_keys', JSON.stringify(userKeys));
+            localStorage.setItem('vibevault_score', vibeScore);
+
+            cart = [];
+            saveCart();
+            updateCartUI();
+            closeCheckout();
+
+            createConfetti();
+            showToast('Pre-order successful! Check email for confirmation.', 5000);
+            updateUserScore();
+            if (isLoggedIn) updateDashboard();
+        }
+
+        function addOrder(item) {
+            let orders = JSON.parse(localStorage.getItem('vibevault_orders') || '[]');
+            orders.unshift({
+                id: 'VV-' + Date.now(),
+                item: item.name,
+                status: 'Pre-ordered',
+                total: 'R' + item.deposit,
+                date: new Date().toLocaleDateString()
+            });
+            localStorage.setItem('vibevault_orders', JSON.stringify(orders));
+        }
+
+        // ==========================================
+        // ACCOUNT SYSTEM - NEW
+        // ==========================================
+        function openAccountModal() {
+            document.getElementById('account-modal').classList.add('active');
+            if (isLoggedIn) {
+                showDashboard();
+            } else {
+                showAuth();
+            }
+        }
+
+        function closeAccountModal() {
+            document.getElementById('account-modal').classList.remove('active');
+        }
+
+        function showAuth() {
+            document.getElementById('auth-view').classList.remove('hidden');
+            document.getElementById('dashboard-view').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('auth-view').classList.add('hidden');
+            document.getElementById('dashboard-view').classList.remove('hidden');
+            updateDashboard();
+        }
+
+        async function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    if (response.ok) {
+        localStorage.setItem('vibevault_user', JSON.stringify(data.user));
+        showToast('Welcome back!');
+        updateUIForLoggedInUser();
+    } else {
+        showToast(data.error || 'Login failed');
+    }
+}
+
+        async function handleRegister(e) {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    const phone = document.getElementById('registerPhone').value;
+    
+    const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ 
+            fullName: name, 
+            email, 
+            password, 
+            phone 
+        })
+    });
+    
+    const data = await response.json();
+    if (response.ok) {
+        localStorage.setItem('vibevault_user', JSON.stringify(data.user));
+        showToast('Account created!');
+        updateUIForLoggedInUser();
+    } else {
+        showToast(data.error || 'Registration failed');
+    }
+}
+
+        function createUserAccount(name, email) {
+            userData = {
+                name: name,
+                email: email,
+                initials: name.split(' ').map(n => n[0]).join('').toUpperCase(),
+                referralCode: 'VV-' + Math.floor(100000 + Math.random() * 900000),
+                anonymous: false,
+                refs: 0,
+                refEarnings: 0
+            };
+            isLoggedIn = true;
+            localStorage.setItem('vibevault_user', JSON.stringify(userData));
+            localStorage.setItem('vibevault_logged_in', 'true');
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            localStorage.removeItem('vibevault_logged_in');
+            showAuth();
+            updateUIForLoggedOutUser();
+            showToast('Signed out successfully');
+        }
+
+        function updateUIForLoggedInUser() {
+            document.getElementById('account-btn-text').textContent = 'My Account';
+            document.getElementById('credits-display').classList.remove('hidden');
+            document.getElementById('credits-display').classList.add('flex');
+            document.getElementById('referral-logged-out').classList.add('hidden');
+            document.getElementById('referral-logged-in').classList.remove('hidden');
+            document.getElementById('dash-referral-code').value = userData.referralCode;
+        }
+
+        function updateUIForLoggedOutUser() {
+            document.getElementById('account-btn-text').textContent = 'Sign In';
+            document.getElementById('credits-display').classList.add('hidden');
+            document.getElementById('credits-display').classList.remove('flex');
+            document.getElementById('referral-logged-out').classList.remove('hidden');
+            document.getElementById('referral-logged-in').classList.add('hidden');
+        }
+
+        function updateDashboard() {
+            if (!userData.name) return;
+            document.getElementById('user-name').textContent = userData.name;
+            document.getElementById('user-email').textContent = userData.email;
+            document.getElementById('user-initials').textContent = userData.initials;
+            document.getElementById('user-score').textContent = vibeScore;
+            document.getElementById('user-credits').textContent = 'R' + vaultCredits;
+            document.getElementById('vault-credits').textContent = vaultCredits;
+
+            // Update owned keys
+            const keysList = document.getElementById('owned-keys-list');
+            if (userKeys.length === 0) {
+                keysList.innerHTML = '<p class="text-zinc-500 text-center py-8">No keys owned yet. <a href="#keys" onclick="closeAccountModal()" class="text-amber-500 hover:underline">Browse collection</a></p>';
+            } else {
+                keysList.innerHTML = userKeys.map(keyId => {
+                    const key = keys[keyId];
+                    if (!key) return '';
+                    return `
+                        <div class="flex items-center justify-between p-3 bg-zinc-800/30 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                                    <i class="fas fa-key text-amber-500"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">${key.name}</div>
+                                    <div class="text-xs text-zinc-500">${key.tier} Edition</div>
+                                </div>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-500">Owned</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Update orders
+            const orders = JSON.parse(localStorage.getItem('vibevault_orders') || '[]');
+            const ordersList = document.getElementById('orders-list');
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-zinc-500">No orders yet</td></tr>';
+            } else {
+                ordersList.innerHTML = orders.map(order => `
+                    <tr class="border-b border-zinc-800">
+                        <td class="py-3">${order.id}</td>
+                        <td class="py-3">${order.item}</td>
+                        <td class="py-3 text-center"><span class="px-2 py-1 rounded-full bg-amber-500/20 text-amber-500 text-xs">${order.status}</span></td>
+                        <td class="py-3 text-right">${order.total}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('[id^="tab-"]').forEach(t => t.classList.add('hidden'));
+            document.getElementById('tab-' + tab).classList.remove('hidden');
+        }
+
+        function togglePrivacy() {
+            const isChecked = document.getElementById('privacy-toggle').checked;
+            if (userData) {
+                userData.anonymous = !isChecked;
+                localStorage.setItem('vibevault_user', JSON.stringify(userData));
+                showToast(isChecked ? 'You are visible on Founders Wall' : 'You are anonymous on Founders Wall');
+            }
+        }
+
+        function changePassword() {
+            showToast('Password reset link sent to your email');
+        }
+
+        // ==========================================
+        // REFERRAL SYSTEM
+        // ==========================================
+        function copyReferral() {
+            const code = document.getElementById('dash-referral-code') || document.getElementById('referral-code');
+            if (code) {
+                navigator.clipboard.writeText(code.value);
+                showToast('Referral code copied!');
+            }
+        }
+
+        // ==========================================
+        // LEGAL MODALS
+        // ==========================================
+        function openPrivacyModal() {
+            document.getElementById('privacy-modal').classList.add('active');
+        }
+
+        function openTermsModal() {
+            document.getElementById('terms-modal').classList.add('active');
+        }
+
+        function closeLegalModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function openFAQModal() {
+            showToast('FAQ section coming soon');
+        }
+
+        function openShippingModal() {
+            showToast('Shipping info: Free for Gold, R99 flat rate for others. Local pickup JHB/CT available.');
+        }
+
+        function openContactModal() {
+            showToast('Contact: support@vibevault.co.za');
+        }
+
+        // ==========================================
+        // LEADERBOARD
+        // ==========================================
+        function renderLeaderboard(filter = 'all') {
+            const tbody = document.getElementById('leaderboard-body');
+            let data = leaderboardData;
+
+            if (filter !== 'all') {
+                data = data.filter(user => user.keys.includes(filter));
+            }
+
+            tbody.innerHTML = data.map(user => {
+                const keyIcons = user.keys.map(k => {
+                    const color = k === 'bronze' ? 'text-amber-700' : k === 'silver' ? 'text-zinc-400' : 'text-amber-500';
+                    return `<i class="fas fa-key ${color} text-xs"></i>`;
+                }).join('');
+
+                const statusClass = user.status === 'Vault Master' ? 'text-amber-500 font-semibold' : 'text-zinc-400';
+
+                return `
+                    <tr class="leaderboard-row border-b border-white/5">
+                        <td class="px-4 py-3">
+                            ${user.rank <= 3 ? `<i class="fas fa-crown text-amber-500"></i>` : user.rank}
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-xs font-bold text-black">${user.initials}</div>
+                                <span>${user.name}</span>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-center">${keyIcons}</td>
+                        <td class="px-4 py-3 text-center text-amber-500 font-semibold">${user.score}</td>
+                        <td class="px-4 py-3 text-center ${statusClass}">${user.status}</td>
+                        <td class="px-4 py-3 text-right text-zinc-500">${user.joined}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterLeaderboard(filter) {
+            renderLeaderboard(filter);
+        }
+
+        // ==========================================
+        // ACTIVITY TICKER
+        // ==========================================
+        function renderActivityTicker() {
+            const container = document.getElementById('activity-ticker');
+            const bottomTicker = document.getElementById('bottom-ticker');
+
+            if (container) {
+                container.innerHTML = activities.map(a => `
+                    <div class="flex items-center gap-2 text-sm">
+                        <i class="fas fa-bolt text-amber-500 text-xs"></i>
+                        <span class="text-zinc-300">${a.text}</span>
+                        <span class="text-zinc-600 text-xs">${a.time}</span>
+                    </div>
+                `).join('');
+
+                // Duplicate for seamless loop
+                container.innerHTML += container.innerHTML;
+            }
+
+            if (bottomTicker) {
+                bottomTicker.innerHTML = activities.slice(0, 4).map(a => `
+                    <span class="text-zinc-400">${a.text} <span class="text-zinc-600">${a.time}</span></span>
+                `).join('');
+            }
+        }
+
+        // ==========================================
+        // LOCK VISUALIZATION
+        // ==========================================
+        function updateLocks() {
+            const hasBronze = userKeys.includes('bronze');
+            const hasSilver = userKeys.includes('silver');
+            const hasGold = userKeys.includes('gold');
+
+            updateLock('lock-bronze', hasBronze, 'bronze');
+            updateLock('lock-silver', hasSilver, 'silver');
+            updateLock('lock-gold', hasGold, 'gold');
+
+            // Update status text
+            const bronzeStatus = document.getElementById('user-bronze-status');
+            const silverStatus = document.getElementById('user-silver-status');
+            const goldStatus = document.getElementById('user-gold-status');
+            const vaultStatus = document.getElementById('vault-status-text');
+
+            if (bronzeStatus) bronzeStatus.textContent = hasBronze ? 'Owned ✓' : 'Not Owned';
+            if (bronzeStatus) bronzeStatus.className = hasBronze ? 'text-xs text-green-500 mt-1' : 'text-xs text-zinc-500 mt-1';
+            if (silverStatus) silverStatus.textContent = hasSilver ? 'Owned ✓' : 'Not Owned';
+            if (silverStatus) silverStatus.className = hasSilver ? 'text-xs text-green-500 mt-1' : 'text-xs text-zinc-500 mt-1';
+            if (goldStatus) goldStatus.textContent = hasGold ? 'Owned ✓' : 'Not Owned';
+            if (goldStatus) goldStatus.className = hasGold ? 'text-xs text-green-500 mt-1' : 'text-xs text-zinc-500 mt-1';
+
+            if (vaultStatus) {
+                if (hasBronze && hasSilver && hasGold) {
+                    vaultStatus.innerHTML = '<i class="fas fa-crown text-amber-500 mr-2"></i><span class="text-amber-500 font-bold text-xl">VAULT MASTER ACHIEVED</span><div class="text-sm mt-2">You have unlocked Grand Vault Access (Jan 2027)</div>';
+                }
+            }
+        }
+
+        function updateLock(elementId, isUnlocked, tier) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            if (isUnlocked) {
+                el.classList.remove('border-zinc-700');
+                el.classList.add('border-green-500', 'bg-green-500/10');
+                el.innerHTML = '<i class="fas fa-check text-3xl text-green-500"></i>';
+            }
+        }
+
+        // ==========================================
+        // USER SCORE & PRIZE POOL
+        // ==========================================
+        function updateUserScore() {
+            const scoreEl = document.getElementById('user-vibe-score');
+            if (scoreEl) scoreEl.textContent = vibeScore;
+
+            // Update prize pool (R50 per key sold)
+            const keysSold = 847; // Mock number
+            const prizePool = keysSold * 50;
+            const prizeEl = document.getElementById('prize-pool');
+            if (prizeEl) prizeEl.textContent = 'R' + prizePool.toLocaleString();
+
+            const progress = (keysSold / 1750) * 100;
+            const progressEl = document.getElementById('prize-progress');
+            if (progressEl) progressEl.style.width = progress + '%';
+        }
+
+        // ==========================================
+        // COUNTDOWN TIMER - REALISTIC QUARTERLY
+        // ==========================================
+        function updateCountdown() {
+            // Set next drop to April 1, 2026 (Q2)
+            const nextDrop = new Date('2026-04-01T00:00:00');
+            const now = new Date();
+            const diff = nextDrop - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const daysEl = document.getElementById('countdown-days');
+                const hoursEl = document.getElementById('countdown-hours');
+                const minsEl = document.getElementById('countdown-minutes');
+                const secsEl = document.getElementById('countdown-seconds');
+
+                if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if (minsEl) minsEl.textContent = String(minutes).padStart(2, '0');
+                if (secsEl) secsEl.textContent = String(seconds).padStart(2, '0');
+
+                const topCountdown = document.getElementById('next-release-countdown');
+                if (topCountdown) topCountdown.textContent = `Next Drop: ${days}d ${hours}h`;
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        // ==========================================
+        // UI UTILITIES
+        // ==========================================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            menu.classList.toggle('active');
+            backdrop.classList.toggle('active');
+        }
+
+        function navigateTo(sectionId) {
+            toggleMobileMenu();
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            const textEl = document.getElementById('toast-text');
+            if (textEl) textEl.textContent = message;
+            if (toast) {
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, duration);
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.backgroundColor = ['#f59e0b', '#cd7f32', '#c0c0c0'][Math.floor(Math.random() * 3)];
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartUI();
+            renderLeaderboard();
+            renderActivityTicker();
+            updateLocks();
+            updateUserScore();
+            updateCountdown();
+
+            // Check login status
+            if (localStorage.getItem('vibevault_logged_in') === 'true') {
+                userData = JSON.parse(localStorage.getItem('vibevault_user') || '{}');
+                isLoggedIn = true;
+                updateUIForLoggedInUser();
+            }
+
+            // Scroll reveal
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                const cartDropdown = document.getElementById('cart-dropdown');
+                if (cartDropdown && !e.target.closest('#cart-dropdown') && !e.target.closest('[onclick="toggleCart()"]')) {
+                    cartDropdown.classList.add('hidden');
+                }
+            });
+
+            // Escape key handler
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('mobile-menu').classList.remove('active');
+                    document.getElementById('mobile-menu-backdrop').classList.remove('active');
+                    document.getElementById('checkout-modal').classList.remove('active');
+                    document.getElementById('account-modal').classList.remove('active');
+                    document.getElementById('privacy-modal').classList.remove('active');
+                    document.getElementById('terms-modal').classList.remove('active');
+                    const cartDropdown = document.getElementById('cart-dropdown');
+                    if (cartDropdown) cartDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
